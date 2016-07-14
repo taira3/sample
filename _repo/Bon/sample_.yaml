@@ -1,0 +1,22 @@
+# ui def. sample
+#
+
+ui:
+# uiはlistで羅列。hashでdetail
+  
+  kpd_ui:
+    - { key : fumkeys , style : listbox , databind : @fumkey }
+    - { key : detail , style : listctrl , databind : @detail }
+    - { key : OK , style: button }
+    - { key : Cancel , style: button }
+
+or 
+  # key を線形検索。
+  #   groupが出たら、同じくkeyを線形検索
+  kpd_ui:
+    - { key : fumkeys , style : listbox , databind : @fumkey }
+    - { key : detail , style : listctrl , databind : @detail }
+    - { groupv : # パラメタ込みの名前でよい？
+      - { key : OK , style: button }
+      - { key : Cancel , style: button }
+      }
