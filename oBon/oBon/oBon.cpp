@@ -30,19 +30,42 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	MyRegisterClass(hInstance);
 
 	// アプリケーションの初期化を実行します:
-	if (!InitInstance (hInstance, nCmdShow))
+//	if (!InitInstance (hInstance, nCmdShow))
+//	{
+//		return FALSE;
+//	}
+	hInst = hInstance; // グローバル変数にインスタンス処理を格納します。
+
+	HWND hWnd = CreateDialog(hInstance , MAKEINTRESOURCE(IDD_MAIN) , 0 ,(DLGPROC) WndProc);
+	if (!hWnd)
 	{
-		return FALSE;
+	  return FALSE;
 	}
+
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
+
 
 	// メイン メッセージ ループ:
 	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
-//		if (hDlg == 0 || !IsDialogMessage(hDlg, &msg))
+		if (!IsDialogMessage(hWnd, &msg))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+		}
+		else
+		{
+
+
+			switch (msg.message)
+			{
+			case WM_KEYUP:
+				PostQuitMessage(0);
+				break;
+			}
+
 		}
 	}
 
@@ -147,6 +170,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	case WM_KEYUP:
 		PostQuitMessage(0);
 		break;
 	default:
