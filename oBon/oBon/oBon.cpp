@@ -12,7 +12,6 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// メイン ウィンドウ クラス名
 
 // このコード モジュールに含まれる関数の宣言を転送します:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
-BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
@@ -30,13 +29,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	MyRegisterClass(hInstance);
 
 	// アプリケーションの初期化を実行します:
-//	if (!InitInstance (hInstance, nCmdShow))
-//	{
-//		return FALSE;
-//	}
+
 	hInst = hInstance; // グローバル変数にインスタンス処理を格納します。
 
-	HWND hWnd = CreateDialog(hInstance , MAKEINTRESOURCE(IDD_MAIN) , 0 ,(DLGPROC) WndProc);
+	HWND hWnd = CreateDialog(hInstance , MAKEINTRESOURCE(IDD_MAIN) ,0 ,(DLGPROC)WndProc);
 	if (!hWnd)
 	{
 	  return FALSE;
@@ -44,7 +40,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
-
 
 	// メイン メッセージ ループ:
 	MSG msg;
@@ -57,15 +52,12 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		}
 		else
 		{
-
-
 			switch (msg.message)
 			{
 			case WM_KEYUP:
 				PostQuitMessage(0);
 				break;
 			}
-
 		}
 	}
 
@@ -89,8 +81,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 {
 	WNDCLASSEX wcex;
 
-	wcex.cbSize = sizeof(WNDCLASSEX);
-
+	wcex.cbSize			= sizeof(WNDCLASSEX);
 	wcex.style			= CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc	= WndProc;
 	wcex.cbClsExtra		= 0;
@@ -98,37 +89,11 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.hInstance		= hInstance;
 	wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_OBON));
 	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground	=  (HBRUSH)CreateSolidBrush(GetSysColor(COLOR_MENU));
+	wcex.hbrBackground	= (HBRUSH)CreateSolidBrush(GetSysColor(COLOR_MENU));
 	wcex.lpszMenuName	= NULL;
 	wcex.lpszClassName	= szWindowClass;
 
 	return RegisterClassEx(&wcex);
-}
-
-//
-//   関数: InitInstance(HINSTANCE, int)
-//
-//   目的: インスタンス ハンドルを保存して、メイン ウィンドウを作成します。
-//
-//   コメント:
-//
-//        この関数で、グローバル変数でインスタンス ハンドルを保存し、
-//        メイン プログラム ウィンドウを作成および表示します。
-//
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
-{
-   hInst = hInstance; // グローバル変数にインスタンス処理を格納します。
-
-   HWND hWnd = CreateDialog(hInstance , MAKEINTRESOURCE(IDD_MAIN) , 0 ,(DLGPROC) WndProc);
-   if (!hWnd)
-   {
-      return FALSE;
-   }
-
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
-
-   return TRUE;
 }
 
 //
