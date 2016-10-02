@@ -175,6 +175,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExtRoleBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Logger.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\oBon.cpp"
 				>
 			</File>
@@ -198,6 +206,10 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\UXCore.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="ヘッダー ファイル"
@@ -206,6 +218,14 @@
 			>
 			<File
 				RelativePath=".\EasterEgg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ExtRoleBox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Logger.h"
 				>
 			</File>
 			<File
@@ -222,6 +242,10 @@
 			</File>
 			<File
 				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UXCore.h"
 				>
 			</File>
 		</Filter>

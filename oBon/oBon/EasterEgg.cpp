@@ -8,3 +8,8 @@ EasterEgg::EasterEgg(void)
 EasterEgg::~EasterEgg(void)
 {
 }
+
+bool EasterEgg::OpenKeyTbl()
+{
+	return true;
+}

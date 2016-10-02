@@ -6,5 +6,6 @@ public:
 	EasterEgg(void);
 	~EasterEgg(void);
 
-
+private:
+	bool	OpenKeyTbl();
 };
