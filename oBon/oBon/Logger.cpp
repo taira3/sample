@@ -40,7 +40,7 @@ bool Logger::debug( LPCTSTR lpszFormat, ... )
 	{
 		va_list argp;
 		va_start(argp, lpszFormat);
-		WriteOut( (LPCTSTR)"DEBUG", lpszFormat, m_dwError, argp );
+		WriteOut( (LPCTSTR)_T("DEBUG"), lpszFormat, m_dwError, argp );
 		va_end(argp);
 	}
 
@@ -61,7 +61,7 @@ bool Logger::info( LPCTSTR lpszFormat, ... )
 	{
 		va_list argp;
 		va_start(argp, lpszFormat);
-		WriteOut( (LPCTSTR)"INFO", lpszFormat, m_dwError, argp );
+		WriteOut( (LPCTSTR)_T("INFO"), lpszFormat, m_dwError, argp );
 		va_end(argp);
 	}
 
@@ -82,7 +82,7 @@ bool Logger::warning( LPCTSTR lpszFormat, ... )
 	{
 		va_list argp;
 		va_start(argp, lpszFormat);
-		WriteOut( (LPCTSTR)"WARNING", lpszFormat, m_dwError, argp );
+		WriteOut( (LPCTSTR)_T("WARNING"), lpszFormat, m_dwError, argp );
 		va_end(argp);
 	}
 
@@ -103,7 +103,7 @@ bool Logger::error( LPCTSTR lpszFormat,	...	)
 	{
 		va_list argp;
 		va_start(argp, lpszFormat);
-		WriteOut( (LPCTSTR)"ERROR", lpszFormat, this->m_dwError, argp );
+		WriteOut( (LPCTSTR)_T("ERROR"), lpszFormat, this->m_dwError, argp );
 		va_end(argp);
 	}
 
