@@ -6,6 +6,13 @@
  */
 #pragma once
 
+enum class identifier2 : long {
+	enumerator5,
+	enumerator6,
+	enumerator7 = 100,
+	enumerator8,
+};
+
 class Logger
 {
 public:

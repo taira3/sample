@@ -124,13 +124,11 @@ BOOL Logger::WriteOut(LPCTSTR lpKind, LPCTSTR format, DWORD dwFlags, va_list arg
 //	LeaveCriticalSection(&m_csWrite);
 
 	return TRUE ;
-
 }
 
 BOOL Logger::WriteOut(LPCTSTR lpData, DWORD dwFlags )
 {
-		return TRUE ;
-
+	return TRUE ;
 }
 
 BOOL Logger::WriteOut(LPCTSTR lpData )

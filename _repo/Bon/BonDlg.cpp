@@ -239,7 +239,6 @@ void CBonDlg::OnDestroy()
 	{
 		delete m_dbg ;
 	}
-
 }
 
 BOOL CBonDlg::PreTranslateMessage(MSG* pMsg)
