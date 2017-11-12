@@ -3,19 +3,18 @@
 #include "oBon.h"
 #include <shellapi.h>
 
-#if 1
-ObonApp::~ObonApp()
+ObonApp::ObonApp(HINSTANCE v1, int v2)
 {
-}
+	hInstance = v1;
+	nCmdShow = v2;
 
-void	ObonApp::Init()
-{
 	// グローバル文字列を初期化しています。
 	LoadString(hInstance, IDC_OBON, szWindowClass, MAX_LOADSTRING);
+
 	WNDCLASSEX wcex = {};
 	wcex.cbSize = sizeof(WNDCLASSEX);
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc = WndProcWrap;
+	wcex.lpfnWndProc = WndProcProxy;
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
 	wcex.hInstance = hInstance;
@@ -25,27 +24,31 @@ void	ObonApp::Init()
 	wcex.lpszMenuName = NULL;
 	wcex.lpszClassName = szWindowClass;
 
-	ATOM a = RegisterClassEx(&wcex);
+	unique_class = RegisterClassEx(&wcex);
+}
 
-	// アプリケーションの初期化を実行します:
+ObonApp::~ObonApp()
+{
+	UnregisterClass(MAKEINTATOM(unique_class), hInstance);
+}
 
-	//	hInst = hInstance; // グローバル変数にインスタンス処理を格納します。
-	
+//
+void	ObonApp::Run()
+{
 	HWND hWnd = CreateWindowEx(
-		WS_EX_ACCEPTFILES,		//DWORD dwExStyle,
-		szWindowClass,		//LPCTSTR lpClassName,
-		_T("TestApp"),		//LPCTSTR lpWindowName,
-		WS_OVERLAPPEDWINDOW, //DWORD dwStyle,
-		CW_USEDEFAULT,		//int x,
-		CW_USEDEFAULT,		//int y,
-		CW_USEDEFAULT,		//int nWidth,
-		CW_USEDEFAULT,		//int nHeight,
-		NULL,				//HWND hWndParent,
-		NULL,				//HMENU hMenu,
-		hInstance,			//HINSTANCE hInstance,
-		this				//LPVOID lpParam
+		WS_EX_ACCEPTFILES,		// dwExStyle,
+		szWindowClass,			// lpClassName,
+		_T("TestApp"),			// lpWindowName,
+		WS_OVERLAPPEDWINDOW,	// dwStyle,
+		CW_USEDEFAULT,			// x,
+		CW_USEDEFAULT,			// y,
+		CW_USEDEFAULT,			// nWidth,
+		CW_USEDEFAULT,			// nHeight,
+		NULL,					// hWndParent,
+		NULL,					// hMenu,
+		hInstance,				// hInstance,
+		this					// lpParam
 	);
-	
 
 	if (!hWnd)
 	{
@@ -64,28 +67,31 @@ void	ObonApp::Init()
 	}
 
 	DestroyWindow(hWnd);
-
-	UnregisterClass(MAKEINTATOM(a), hInstance);
-
 }
 
 //
-LRESULT CALLBACK	ObonApp::WndProcWrap(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK	ObonApp::WndProcProxy(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	ObonApp *pThis = NULL;
 
+	// WndProc()をClass内で扱う場合、staticなWrapper関数(本関数)に   .
+	// CreateWindowsEX()の引数で渡されたthisを、WM_NCCREATEかWM_CREATEで .
+	// WindowLongPtrに設定/参照がMFPやATLでも採る王道アプローチらしい .
+	// https://msdn.microsoft.com/ja-jp/library/windows/desktop/ff381400(v=vs.85).aspx .
 	if (message == WM_NCCREATE)
 	{
-		CREATESTRUCT* pCreate = (CREATESTRUCT*)lParam;
-		pThis = (ObonApp*)pCreate->lpCreateParams;
+		CREATESTRUCT *pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
+		pThis = reinterpret_cast<ObonApp*>(pCreate->lpCreateParams);
 		SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)pThis);
 	}
 	else
 	{
-		pThis = (ObonApp*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+		pThis = reinterpret_cast<ObonApp*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 	}
 
-	return pThis ? pThis->WndProc(hWnd, message, wParam, lParam) : DefWindowProc(hWnd, message, wParam, lParam);
+	return pThis ?
+		pThis->WndProc(hWnd, message, wParam, lParam) : 
+		DefWindowProc(hWnd, message, wParam, lParam) ;
 }
 
 //
@@ -175,5 +181,3 @@ bool	ObonApp::wakeUpSomeone(TCHAR *filePath)
 	OutputDebugString(filePath);
 	return false;
 }
-
-#endif // 0

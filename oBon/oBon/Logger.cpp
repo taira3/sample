@@ -136,6 +136,7 @@ BOOL Logger::WriteOut(LPCTSTR lpData )
 	SYSTEMTIME	st ;
 	GetLocalTime( &st );
 
+	
 	char	*buf = new char [1024/*BUFFER_SIZE*/];
 	sprintf( buf, "%04d/%02d/%02d,%02d:%02d:%02d.%03d,%s\n",
 					st.wYear,

@@ -2,21 +2,16 @@
 
 #include "resource.h"
 
-#if 1
 class ObonApp
 {
 public:
-	ObonApp(HINSTANCE v1, int v2) {
-		hInstance = v1;
-		nCmdShow = v2;
-	}
+	ObonApp(HINSTANCE v1, int v2);
 	~ObonApp();
 
-	void	Init();
-///	ATOM				MyRegisterClass(HINSTANCE hInstance);
+	void	Run();
 
 	// このコード モジュールに含まれる関数の宣言を転送します:
-	static LRESULT CALLBACK	WndProcWrap(HWND, UINT, WPARAM, LPARAM);
+	static LRESULT CALLBACK	WndProcProxy(HWND, UINT, WPARAM, LPARAM);
 	LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 	bool	OnDrop(WPARAM wp);
 	bool	wakeUpSomeone(TCHAR *filePath);
@@ -29,9 +24,8 @@ public:
 	int		nCmdShow;
 
 	HINSTANCE hInstance;
+	ATOM unique_class;
 
 	// jhone_doe
 
 };
-
-#endif // 0

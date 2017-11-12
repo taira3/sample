@@ -3,49 +3,77 @@
 
 #include "stdafx.h"
 #include "oBon.h"
-#include "ObonApp.h"
-#include "CmdOpt.h"
-#include "NodeVar.h"
 #include <shellapi.h>
 
 
+void test()
+{
+	NodeVar	a;
 
+	a = "abc";
 
+	a = _T("abc");
+
+}
+
+//
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
-	//UNREFERENCED_PARAMETER(lpCmdLine);
 
- 	// TODO: ここにコードを挿入してください。
-	NodeVar	node ;
-		
-	node = lpCmdLine;
-	CmdOpt	*opt = new CmdOpt();
+	test();
 
+	// ---- 前準備 ----
+
+	// 
+	NodeVar	node = lpCmdLine;
+	
+	CmdOpt	*opt = new CmdOpt(node);
+
+	//
 	if (opt->IsVersion())
 	{
 		// version 表示.
 	}
+
+	//
 	if (opt->IsHelp())
 	{
 		// Help 表示.
 	}
 
-	if (opt->IsGUI())
-	{
-		// GUI で起動.
-		ObonApp	*pApp = new ObonApp(hInstance, nCmdShow);
-		pApp->Init();
-		delete pApp;
-	}
-	else
-	{
-		// CUI で起動.
-	}
+	// ---- 本題 ----
 
-//	return (int)msg.wParam;
+	int result = opt->IsGUI() ? 
+		RunGuiMode(hInstance, nCmdShow, opt) : 
+		RunCuiMode(hInstance, nCmdShow, opt) ;
+
+	// ---- 後始末 ----
+
+	delete opt;
+
+	return result;
+}
+
+//
+int RunGuiMode(HINSTANCE hInstance, int nCmdShow, CmdOpt *opt)
+{
+	ObonApp	*pApp = new ObonApp(hInstance, nCmdShow);
+	pApp->Run();
+	delete pApp;
+
 	return 0;
 }
+
+int RunCuiMode(HINSTANCE hInstance, int nCmdShow, CmdOpt *opt)
+{
+	ObonApp	*pApp = new ObonApp(hInstance, nCmdShow);
+	pApp->Run();
+	delete pApp;
+
+	return 0;
+}
+
