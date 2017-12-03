@@ -17,12 +17,14 @@ using namespace std;
  * 0x40 : unassigned
  * VK_A - VK_Z are the same as ASCII 'A' - 'Z' (0x41 - 0x5A)
  */
+#if 0
 #define VK_A           0x41
 #define VK_B           0x42
 #define VK_C           0x43
 #define VK_D           0x44
 
-#define	VK_TERM			-1
+#endif // 0
+#define	VK_TERM			-1  
 
 typedef struct _val_tag {
 	int		type ;
@@ -86,12 +88,6 @@ private:
 private:
 	bool	OpenKeyTbl();
 
-//	void	test( int *tbl );
-	void	test( int tbl[] );
-
-	void	test2( vector<int> a );
-
-	void	test3( _cmd2 *p );
 
 public:
 	bool	knock( int key );

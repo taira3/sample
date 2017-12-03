@@ -7,6 +7,10 @@
 
 #include "StdAfx.h"
 #include "Logger.h"
+#include	<iostream>
+#include	<sstream>
+#include	<fstream>
+
 
 Logger::Logger(void)
 {
@@ -136,8 +140,8 @@ BOOL Logger::WriteOut(LPCTSTR lpData )
 	SYSTEMTIME	st ;
 	GetLocalTime( &st );
 
-	
-	char	*buf = new char [1024/*BUFFER_SIZE*/];
+	/*
+	char	*buf = new char [1024/*BUFFER_SIZE/];
 	sprintf( buf, "%04d/%02d/%02d,%02d:%02d:%02d.%03d,%s\n",
 					st.wYear,
 					st.wMonth,
@@ -148,6 +152,7 @@ BOOL Logger::WriteOut(LPCTSTR lpData )
 					st.wMilliseconds,
 					lpData
 			);
+	*/
 /*
 	if( dwFlags & FILE )
 	{
@@ -180,7 +185,7 @@ BOOL Logger::WriteOut(LPCTSTR lpData )
 		WriteFile(hStdOut, buf, lstrlen(buf), &dwWrite, NULL);
 	}
 */
-	delete [] buf ;
+//	delete [] buf ;
 
 	return TRUE ;
 }

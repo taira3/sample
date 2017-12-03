@@ -1,5 +1,6 @@
 #pragma once
 #include	<string>
+//#include	<vector>
 
 using namespace	std;
 
@@ -19,9 +20,9 @@ private:
 	{
 		void*	vpval;
 		int		ival;
-		string	*szval;
-//		wstring	wszval;
 	} val ;
+	string	str_val;
+	wstring	wstr_val;
 	enum {
 		TYPE_INT,
 		TYPE_PVOID
@@ -29,51 +30,20 @@ private:
 
 public:
 	// ‘ã“ü‰‰ŽZŽq
-	NodeVar &operator=(const int v) {
-		this->val.ival = v;
-		return(*this);
-	};
-
-#if 0
-	NodeVar &operator=(const LPTSTR v) {
-		//this->val.ival = v;
-		/*
-		TCHAR  infoBuf[32767]
-GetWindowsDirectory(infoBuf, 32767); 
-wstring test(&infoBuf[0]); //convert to wstring
-string test2(test.begin(), test.end()); //and convert to string.
-*/
-		//wchar_t  LPWSTR
-
-
-		return(*this);
-	};
-#endif
-
-	NodeVar &operator=(const LPWSTR v) {
-		_let(v);
-		return(*this);
-	};
-
-	NodeVar &operator=(const LPSTR v) {
-		_let(v);
-		return(*this);
-	};
+	NodeVar &operator=(const int v);
+	NodeVar &operator=(const LPWSTR v);
+	NodeVar &operator=(const LPSTR v);
 
 private:
 
-	NodeVar	_let(const LPWSTR v)
-	{
-		return(*this);
-	}
-	NodeVar	_let(const LPSTR v)
-	{
-		return(*this);
-	}
-	NodeVar	_let(const int v)
-	{
-		return(*this);
-	}
-	//NodeVar(const NodeVar&) = delete;
+	void	_let(const LPWSTR v);
+	void	_let(const LPSTR v);
+	void	_let(const int v);
+
+	std::wstring m2w_capi(std::string const& src);
+	std::string w2m_capi(std::wstring const& src);
+	std::wstring m2w_winapi(std::string const& src);
+	std::string w2m_winapi(std::wstring const& src);
+
 };
 

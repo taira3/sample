@@ -2,6 +2,10 @@
 
 #include "resource.h"
 
+#include "UXCore.h"
+#include "EasterEgg.h"
+
+
 class ObonApp
 {
 public:
@@ -26,6 +30,11 @@ public:
 	HINSTANCE hInstance;
 	ATOM unique_class;
 
+	HWND	hTab;
+
+	UXCore	*ux = NULL;
+
 	// jhone_doe
 
+	EasterEgg	ee;
 };

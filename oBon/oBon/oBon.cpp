@@ -10,9 +10,19 @@ void test()
 {
 	NodeVar	a;
 
-	a = "abc";
+	try
+	{
+		a = "abc";
+		a = "‚ ‚¢‚¤";
 
-	a = _T("abc");
+		a = _T("abc");
+		a = _T("‚ ‚¢‚¤");
+
+	}
+	catch (const std::exception&d)
+	{
+		printf("%s\n", d.what());
+	}
 
 }
 

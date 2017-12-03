@@ -2,6 +2,7 @@
 #include "ObonApp.h"
 #include "oBon.h"
 #include <shellapi.h>
+#include <commctrl.h>
 
 ObonApp::ObonApp(HINSTANCE v1, int v2)
 {
@@ -112,9 +113,27 @@ LRESULT CALLBACK ObonApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 
 	switch (message)
 	{
+	case WM_CREATE:
+		ux = new UXCore(hWnd, ((LPCREATESTRUCT)lParam)->hInstance);
+		break;
+
+
 	case WM_INITDIALOG:
 		//
-		DragAcceptFiles(hWnd, TRUE);		// File DnD ‹–‰Â.
+		//DragAcceptFiles(hWnd, TRUE);		// File DnD ‹–‰Â.
+		break;
+
+	case WM_KEYUP:
+		//
+		break;
+
+	case WM_LBUTTONDBLCLK:
+		//
+		break;
+
+	case WM_LBUTTONUP:
+		//
+		ux->AddPage();
 		break;
 
 	case WM_COMMAND:
